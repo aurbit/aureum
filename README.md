@@ -1,4 +1,4 @@
-## Aureum Ethereum Plasma Chain
+## Aureum Plasma Chain - ETH Layer2
 
 ![Standard Js](https://cdn.rawgit.com/feross/standard/master/badge.svg)
 
