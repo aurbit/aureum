@@ -1,0 +1,16 @@
+{
+  "name": "solidity",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "^1.0.42",
+    "ganache-cli": "^6.10.1",
+    "truffle": "^5.1.41",
+    "dotenv": "^8.2.0"
+  },
+  "scripts": {
+    "chain": "ganache-cli -p 7545 -m 'candy maple cake sugar pudding cream honey rich smooth crumble sweet treat'",
+    "migrate": "rm -rf build && truffle migrate",
+    "console": "truffle console"
+  }
+}

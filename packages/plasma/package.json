@@ -1,0 +1,28 @@
+{
+  "name": "plasma",
+  "version": "1.0.0",
+  "description": "Aureum Plasma Chain",
+  "main": "server.js",
+  "scripts": {
+    "plasma": "node main.js",
+    "plasma:dev": "nodemon main.js",
+    "plasma:test": "mocha ./test"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "keccak": "^1.4.0",
+    "minimist": "^1.2.5",
+    "rlp": "^2.0.0",
+    "web3": "^1.2.11"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.1.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.1.1",
+    "ganache-cli": "^6.10.1"
+  }
+}
