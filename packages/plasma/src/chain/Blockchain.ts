@@ -1,5 +1,5 @@
 import utils from './utils'
-import { TxManager, ITxManager } from './TxManger'
+import { TxManager, ITxManager } from './TxManager'
 
 import { IAeth } from './Aeth'
 import { Block, IBlock } from './Block'

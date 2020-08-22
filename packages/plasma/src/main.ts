@@ -1,6 +1,6 @@
 import { Blockchain } from './chain/Blockchain'
 import { Aeth } from './chain/Aeth'
-import { TxManager } from './chain/TxManger'
+import { TxManager } from './chain/TxManager'
 import { Server } from './chain/Server'
 
 import config from './config'

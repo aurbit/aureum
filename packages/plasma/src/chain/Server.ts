@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 
 import { IAeth } from './Aeth'
 import { IBlockchain } from './Blockchain'
-import { ITxManager } from './TxManger'
+import { ITxManager } from './TxManager'
 
 export interface IServer {
   txManager: ITxManager
