@@ -28,41 +28,45 @@ export class Blockchain implements IBlockchain {
   }
 
   async generateNextBlock () {
-    const previousBlock = this.latestBlock
-    const previousHash = previousBlock.hash
-    const nextIndex = previousBlock.blockHeader.blockNumber + 1
+    try {
+      const previousBlock = this.latestBlock
+      const previousHash = previousBlock.hash
+      const nextIndex = previousBlock.blockHeader.blockNumber + 1
 
-    // Get all past transactions
-    const deposits = await this.aeth.getDeposits(nextIndex - 1)
-    const withdrawals = await this.aeth.getWithdrawals(nextIndex - 1)
-    const transactions = await this.txManager.collectTransactions(
-      nextIndex,
-      deposits,
-      withdrawals
-    )
+      // Get all past transactions
+      const deposits = await this.aeth.getDeposits(nextIndex - 1)
+      const withdrawals = await this.aeth.getWithdrawals(nextIndex - 1)
+      const transactions = await this.txManager.collectTransactions(
+        nextIndex,
+        deposits,
+        withdrawals
+      )
 
-    const newBlock: IBlock = await new Block(
-      nextIndex,
-      previousHash,
-      transactions
-    )
+      const newBlock: IBlock = await new Block(
+        nextIndex,
+        previousHash,
+        transactions
+      )
 
-    // Operator signs the new block.
-    const messageToSign = utils.addHexPrefix(
-      newBlock.blockHeader.toString(false)
-    )
-    const signature = await this.aeth.signBlock(messageToSign)
-    newBlock.blockHeader.setSignature(signature)
+      // Operator signs the new block.
+      const messageToSign = utils.addHexPrefix(
+        newBlock.blockHeader.toString(false)
+      )
+      const signature = await this.aeth.signBlock(messageToSign)
+      newBlock.blockHeader.setSignature(signature)
 
-    // Submit the block header to plasma contract.
-    const hexPrefixHeader = utils.addHexPrefix(
-      newBlock.blockHeader.toString(true)
-    )
-    await this.aeth.submitBlockHeader(hexPrefixHeader)
+      // Submit the block header to plasma contract.
+      const hexPrefixHeader = utils.addHexPrefix(
+        newBlock.blockHeader.toString(true)
+      )
+      await this.aeth.submitBlockHeader(hexPrefixHeader)
 
-    // Add the new block to blockchain.
-    this.blockchain.push(newBlock)
-    return newBlock
+      // Add the new block to blockchain.
+      this.blockchain.push(newBlock)
+      return newBlock
+    } catch (err) {
+      console.log('Failed to generate new block', err)
+    }
   }
 
   get genesisBlock (): IBlock {

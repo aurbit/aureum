@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-
+const web3 = require('web3')
 // creates a file in the build folder with the
 // address of the deployed contract artifact
 const BUILD_CONTRACTS_DIR = '../build/contracts'
@@ -48,9 +48,9 @@ module.exports = async (contractName, contractAddress, network, account) => {
     `
     module.exports = {
       "network": "${network}",
+      "operator": "${account}",
       "address": "${contractAddress}",
       "artifact": ${contractJson},
-      "operator": ${account}
     }
   `
   )

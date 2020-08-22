@@ -1,3 +1,6 @@
+import * as RLP from 'rlp'
+import utils from './utils'
+
 export interface ITransaction {
   // first input
   blkNum1: number
@@ -19,6 +22,9 @@ export interface ITransaction {
 
   type: string
   fee: any
+
+  encode: any
+  toString: any
 }
 
 export class Transaction implements ITransaction {
@@ -57,5 +63,30 @@ export class Transaction implements ITransaction {
 
     this.fee = args?.fee || 0.01
     this.type = args?.type || new Error('Tx type reqired.')
+  }
+
+  encode (includingSig) {
+    const data = [
+      this.blkNum1,
+      this.txIndex1,
+      this.oIndex1,
+      this.blkNum2,
+      this.txIndex2,
+      this.oIndex2,
+      this.newOwner1,
+      this.denom1,
+      this.newOwner2,
+      this.denom2,
+      this.fee
+    ]
+    if (includingSig) {
+      data.push(this.sig1)
+      data.push(this.sig2)
+    }
+    return RLP.encode(data)
+  }
+
+  toString (includingSig) {
+    return utils.bufferToHex(this.encode(includingSig), false)
   }
 }

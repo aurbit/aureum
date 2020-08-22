@@ -37,15 +37,14 @@ export class Server implements IServer {
 
     // Block related
     app.get('/blocks', (req, res) => {
-      res.send(
-        JSON.stringify(this.blockchain.blocks().map(b => b.printBlock()))
-      )
+      res.send(JSON.stringify(this.blockchain.blocks.map(b => b.printBlock())))
     })
     app.post('/mineBlock', async (req, res) => {
       try {
-        const newBlock = await this.blockchain.generateNextBlock(this.aeth)
+        const newBlock = await this.blockchain.generateNextBlock()
         res.send(JSON.stringify(newBlock.printBlock()))
       } catch (e) {
+        console.log(e)
         res.send(JSON.stringify(e))
       }
     })
@@ -71,9 +70,9 @@ export class Server implements IServer {
           req.body.address,
           req.body.amount
         )
-        res.send(result)
+        res.status(200).send(result)
       } catch (err) {
-        res.send(JSON.stringify(err))
+        res.status(500).send(JSON.stringify(err))
       }
     })
 

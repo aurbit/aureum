@@ -34,31 +34,6 @@ export class TxManager implements ITxManager {
     this.txPool = []
   }
 
-  encode (tx, includingSig) {
-    const data = [
-      tx.blkNum1,
-      tx.txIndex1,
-      tx.oIndex1,
-      tx.blkNum2,
-      tx.txIndex2,
-      tx.oIndex2,
-      tx.newOwner1,
-      tx.denom1,
-      tx.newOwner2,
-      tx.denom2,
-      tx.fee
-    ]
-    if (includingSig) {
-      data.push(tx.sig1)
-      data.push(tx.sig2)
-    }
-    return RLP.encode(data)
-  }
-
-  toString (tx, includingSig) {
-    return utils.bufferToHex(this.encode(tx, includingSig), false)
-  }
-
   setSignature (tx, sig) {
     tx.sig1 = sig
     if (tx.blkNum2 !== 0) {
@@ -107,10 +82,7 @@ export class TxManager implements ITxManager {
       type
     })
 
-    const signature = await aeth.signTransaction(
-      this.toString(tx, false),
-      data.from
-    )
+    const signature = await aeth.signTransaction(tx.toString(false), data.from)
     this.setSignature(tx, signature)
 
     if (await this.isValidTransaction(tx, aeth)) {
@@ -122,7 +94,7 @@ export class TxManager implements ITxManager {
     return tx
   }
 
-  createDepositTransactions (deposits) {
+  async createDepositTransactions (deposits) {
     return deposits.map(deposit => {
       const newOwner1 = deposit.from
       const denom1 = parseInt(deposit.amount)
@@ -257,7 +229,7 @@ export class TxManager implements ITxManager {
     const txs: any[] = []
 
     if (deposits.length > 0) {
-      const depositTxs: string = await this.createDepositTransactions(deposits)
+      const depositTxs = await this.createDepositTransactions(deposits)
       for (let i = 0; i < depositTxs.length; i++) {
         const tx: any = depositTxs[i]
         this.createUTXO(blkNum, tx, txs.length)

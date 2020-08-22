@@ -12,8 +12,9 @@ export class Block implements IBlock {
   transactions: string[]
   hash: string
 
-  constructor (blockNumber: number, previousHash: string, transactions) {
-    const data: string[] = []
+  constructor (blockNumber, previousHash, transactions) {
+    const data: any[] = []
+
     transactions.forEach(tx => data.push(tx.toString(true)))
     this.blockHeader = new BlockHeader(blockNumber, previousHash, data)
     this.transactions = transactions

@@ -53,6 +53,7 @@ export class Aeth implements IAeth {
   }
 
   async signBlock (message) {
+    console.log(message, this.plasmaOperator)
     return await this.web3.eth.sign(message, this.plasmaOperator)
   }
 

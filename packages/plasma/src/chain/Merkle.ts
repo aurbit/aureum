@@ -2,12 +2,12 @@ import createKeccakHash from 'keccak'
 
 export interface IMerkle {
   isReady: boolean
-  leaves: string[]
+  leaves: any[]
   levels: any[]
 }
 export class Merkle implements IMerkle {
   isReady: boolean
-  leaves: string[]
+  leaves: any[]
   levels: any[]
 
   constructor (data) {
@@ -34,7 +34,7 @@ export class Merkle implements IMerkle {
     for (let i = this.levels.length - 1; i > 0; i--) {
       let isRightNode: any = index % 2
       let siblingIndex: any = isRightNode ? index - 1 : index + 1
-      let newProof: Buffer = Buffer.alloc(isRightNode ? 0x00 : 0x01)
+      let newProof = new (Buffer.from as any)(isRightNode ? 0x00 : 0x01)
       proof.push(newProof)
       proof.push(this.levels[i][siblingIndex])
       index = Math.floor(index / 2)
@@ -49,7 +49,7 @@ export class Merkle implements IMerkle {
   }
 
   private _getBuffer (value) {
-    return Buffer.alloc(value, 'hex')
+    return new (Buffer.from as any)(value, 'hex')
   }
 
   private _getNextLevel () {
