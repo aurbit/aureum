@@ -2,11 +2,12 @@
   "name": "plasma",
   "version": "1.0.0",
   "description": "Aureum Plasma Chain",
-  "main": "server.js",
+  "main": "src/main.js",
   "scripts": {
-    "plasma": "node main.js",
-    "plasma:dev": "nodemon main.js",
-    "plasma:test": "mocha ./test"
+    "plasma": "rimraf ./build && tsc && node ./build/main.js",
+    "plasma:dev": "nodemon ./src/main.ts",
+    "plasma:test": "mocha ./test",
+    "build": "rimraf ./build && tsc"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -22,7 +23,14 @@
     "node": ">=12.1.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/node": "^14.6.0",
+    "@types/web3": "^1.2.2",
+    "ganache-cli": "^6.10.1",
     "mocha": "^8.1.1",
-    "ganache-cli": "^6.10.1"
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^4.0.2"
   }
 }

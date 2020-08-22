@@ -1,5 +1,3 @@
-'use strict'
-
 const Web3 = require('web3')
 
 const addHexPrefix = msg => {
@@ -30,7 +28,7 @@ const etherToWei = data => {
   return data * 1000000000000000000
 }
 
-module.exports = {
+export default {
   addHexPrefix,
   removeHexPrefix,
   bufferToHex,

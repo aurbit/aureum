@@ -1,10 +1,12 @@
+require('dotenv').config()
+
 const networks = {
   DEVELOPMENT: 'development',
   ROPSTEN: 'ropsten'
 }
 
-const plasmaContractDev = require('../contracts/development/PlasmaChainManager')
-const network = process.env.NETWORK || 'development'
+const plasmaContractDev = require('./contracts/development/PlasmaChainManager')
+const network = process.env.NETWORK || networks.DEVELOPMENT
 
 const _contract = () => {
   switch (network) {
@@ -22,11 +24,14 @@ const _provider = () => {
       return 'http://localhost:7545'
     }
     default:
-      break
+      return 'http://localhost:7545'
   }
 }
 
-module.exports = {
+const config = {
+  get port (): number {
+    return Number(process.env.PORT) || 3001
+  },
   get plasmaContractArtifacts () {
     const contract = _contract()
     return contract.artifact
@@ -43,3 +48,5 @@ module.exports = {
     return _provider()
   }
 }
+
+export default config

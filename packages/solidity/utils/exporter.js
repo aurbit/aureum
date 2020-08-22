@@ -5,7 +5,7 @@ const path = require('path')
 // address of the deployed contract artifact
 const BUILD_CONTRACTS_DIR = '../build/contracts'
 const BUILD_EXPORTS_DIR = '../build/exports'
-const CLIENT_CONTRACTS_DIR = '../../plasma/contracts'
+const CLIENT_CONTRACTS_DIR = '../../plasma/src/contracts'
 
 module.exports = async (contractName, contractAddress, network, account) => {
   const contractsDir = path.join(__dirname, BUILD_CONTRACTS_DIR)

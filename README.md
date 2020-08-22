@@ -90,7 +90,7 @@ npm run console
 
 Next, deposit ETH to the PlasmaChainManager contract:
 
-```
+```javascript
 (development)> var plasma = new PlasmaChainManager(PlasmaChainManager.address)
 (development)> var accounts = await web3.eth.getAccounts()
 (development)> plasma.deposit({ from: accounts[0], value: web3.utils.toWei('1', 'ether'), gas: 300000 })
