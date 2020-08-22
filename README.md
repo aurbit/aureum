@@ -181,5 +181,5 @@ Finalize withdrawals manually.
 | from | Address | Yes      | Who initiates the withdrawal finalization |
 
 ```bash
-curl -H "Content-type:application/json" --data '{"from": "0x857470E5FBa91EE27fa1B84F838ae8220ac91aB8"}' http://localhost:3001/withdraw/finalize
+curl -H "Content-type:application/json" --data '{"from": "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"}' http://localhost:3001/withdraw/finalize
 ```

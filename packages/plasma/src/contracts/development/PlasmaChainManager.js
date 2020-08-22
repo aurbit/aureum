@@ -2,7 +2,7 @@
     module.exports = {
       "network": "development",
       "operator": "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      "address": "0xb3756BAf00a7e62eE5a18a32Ea39Db2AF5ede7fE",
+      "address": "0xcfeD223fAb2A41b5a5a5F9AaAe2D1e882cb6Fe2D",
       "artifact": {
   "contractName": "PlasmaChainManager",
   "abi": [
@@ -23951,7 +23951,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-22T10:22:12.737Z",
+  "updatedAt": "2020-08-22T11:24:50.895Z",
   "devdoc": {
     "methods": {}
   },

@@ -4,8 +4,8 @@
   "description": "Aurbit Ethereum Layer Two Chain",
   "scripts": {
     "chain": "lerna run chain --stream",
-    "plasma": "lerna run plasma --stream ",
-    "plasma:dev": "lerna run plasma:dev --stream",
+    "plasma": "cd packages/plasma && npm run plasma",
+    "plasma:dev": "cd packages/plasma && npm run plasma:dev",
     "plasma:test": "lerna run plasma:test --stream",
     "migrate": "lerna run migrate --stream",
     "console": "cd packages/solidity && npx truffle console",

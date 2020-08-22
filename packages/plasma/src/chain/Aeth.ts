@@ -45,15 +45,13 @@ export class Aeth implements IAeth {
       .submitBlockHeader(header)
       .send({
         from: this.plasmaOperator,
-        gas: 300000
+        gas: 600000
       })
     let ev = result.events.HeaderSubmittedEvent.returnValues
-    console.log(ev)
     return ev
   }
 
   async signBlock (message) {
-    console.log(message, this.plasmaOperator)
     return await this.web3.eth.sign(message, this.plasmaOperator)
   }
 

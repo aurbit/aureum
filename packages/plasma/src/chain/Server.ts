@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import morgan from 'morgan'
 
 import { IAeth } from './Aeth'
 import { IBlockchain } from './Blockchain'
@@ -16,6 +17,7 @@ export class Server implements IServer {
   aeth: IAeth
   blockchain: IBlockchain
   txManager: ITxManager
+  app: any
 
   constructor (
     http_port: number,
@@ -27,19 +29,20 @@ export class Server implements IServer {
     this.aeth = aeth
     this.blockchain = blockchain
     this.txManager = txManaer
+    this.app = express()
+    this.logging()
+
     this.buildRoutes()
   }
 
   buildRoutes (): void {
-    const app = express()
-
-    app.use(bodyParser.json())
+    this.app.use(bodyParser.json())
 
     // Block related
-    app.get('/blocks', (req, res) => {
+    this.app.get('/blocks', (req, res) => {
       res.send(JSON.stringify(this.blockchain.blocks.map(b => b.printBlock())))
     })
-    app.post('/mineBlock', async (req, res) => {
+    this.app.post('/mineBlock', async (req, res) => {
       try {
         const newBlock = await this.blockchain.generateNextBlock()
         res.send(JSON.stringify(newBlock.printBlock()))
@@ -50,7 +53,7 @@ export class Server implements IServer {
     })
 
     // Transaction related
-    app.post('/transact', async (req, res) => {
+    this.app.post('/transact', async (req, res) => {
       try {
         const rawTx = await this.txManager.createTransaction(
           req.body,
@@ -64,7 +67,7 @@ export class Server implements IServer {
     })
 
     // Deposit related
-    app.post('/deposit', async (req, res) => {
+    this.app.post('/deposit', async (req, res) => {
       try {
         const result = await this.aeth.deposit(
           req.body.address,
@@ -77,7 +80,7 @@ export class Server implements IServer {
     })
 
     // Withdrawal related
-    app.post('/withdraw/create', async (req, res) => {
+    this.app.post('/withdraw/create', async (req, res) => {
       try {
         const p = this.blockchain.getTransactionProofInBlock(
           req.body.blkNum,
@@ -97,7 +100,7 @@ export class Server implements IServer {
       }
     })
 
-    app.post('/withdraw/challenge', async (req, res) => {
+    this.app.post('/withdraw/challenge', async (req, res) => {
       try {
         const p = this.blockchain.getTransactionProofInBlock(
           req.body.blkNum,
@@ -117,7 +120,7 @@ export class Server implements IServer {
         res.send(JSON.stringify(err))
       }
     })
-    app.post('/withdraw/finalize', async (req, res) => {
+    this.app.post('/withdraw/finalize', async (req, res) => {
       try {
         const result = await this.aeth.finalizeWithdrawal(req.body.from)
         res.send(result)
@@ -127,14 +130,14 @@ export class Server implements IServer {
     })
 
     // Debug function
-    app.get('/utxo', (req, res) => {
+    this.app.get('/utxo', (req, res) => {
       try {
         res.send(this.txManager.getUTXOS())
       } catch (err) {
         res.send(JSON.stringify(err))
       }
     })
-    app.get('/pool', (req, res) => {
+    this.app.get('/pool', (req, res) => {
       try {
         res.send(this.txManager.getPool)
       } catch (err) {
@@ -142,8 +145,25 @@ export class Server implements IServer {
       }
     })
 
-    app.listen(this.http_port, () =>
+    this.app.listen(this.http_port, () =>
       console.log('Aureum Plasma Server on port: ' + this.http_port)
+    )
+  }
+
+  logging (): void {
+    this.app.use(
+      morgan(function (tokens, req, res) {
+        return [
+          tokens.date('web'),
+          tokens.method(req, res),
+          tokens.url(req, res),
+          tokens.status(req, res),
+          tokens.res(req, res, 'content-length'),
+          '-',
+          tokens['response-time'](req, res),
+          'ms'
+        ].join(' ')
+      })
     )
   }
 }
