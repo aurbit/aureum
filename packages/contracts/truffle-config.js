@@ -49,6 +49,13 @@ module.exports = {
       gas: 6721975,
       websockets: true
     },
+    test: {
+      host: '127.0.0.1', // Localhost (default: none)
+      port: 9545, // Standard Ethereum port (default: none)
+      network_id: '*', // Any network (default: none)
+      gas: 6721975,
+      websockets: true
+    },
     // matic: {
     //   provider: () =>
     //     new HDWalletProvider(privateKeys, `https://rpc-mumbai.matic.today`),

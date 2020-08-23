@@ -69,7 +69,7 @@ export class Aeth implements IAeth {
   }
 
   async deposit (address, amount) {
-    amount = utils.etherToWei(amount)
+    amount = await utils.etherToWei(amount)
     const result = await this.plasmaContract.methods.deposit().send({
       from: address,
       value: amount,

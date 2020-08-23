@@ -1,13 +1,15 @@
 {
-  "name": "plasma",
+  "name": "@aurbit/plasma",
   "version": "1.0.0",
   "description": "Aureum Plasma Chain",
-  "main": "src/main.js",
+  "main": "start.js",
   "scripts": {
-    "plasma": "rimraf ./build && tsc && node ./build/main.js",
-    "plasma:dev": "nodemon ./src/main.ts",
-    "plasma:test": "mocha ./test",
-    "build": "rimraf ./build && tsc"
+    "plasma": "rimraf ./build && tsc && node ./build/start.js",
+    "plasma:dev": "nodemon ./src/start.ts",
+    "test": "mocha --timeout 20000 -r ts-node/register --file ./src/tests/setup.ts ./src/tests/**/*.spec.ts",
+    "plasma:build": "rimraf ./build && tsc",
+    "test:chain": "ganache-cli -p 9545 -m candy maple cake sugar pudding cream honey rich smooth crumble sweet treat",
+    "migrate:test": "cd ../contracts && truffle migrate --network test"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -23,9 +25,14 @@
     "node": ">=12.1.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.12",
     "@types/express": "^4.17.7",
+    "@types/mocha": "^8.0.3",
     "@types/node": "^14.6.0",
     "@types/web3": "^1.2.2",
+    "chai": "^4.2.0",
+    "ganache-cli": "^6.10.1",
+    "lerna": "^3.22.1",
     "mocha": "^8.1.1",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",

@@ -1,8 +1,8 @@
 
     module.exports = {
-      "network": "development",
-      "operator": "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      "address": "0xd54b47F8e6A1b97F3A84f63c867286272b273b7C",
+      "network": "test",
+      "operator": "0x70c0D1904aa32a40d146c9C45a7CB883ea7fE84C",
+      "address": "0xDDB7AE801C6680282543F962D9334170c82052F5",
       "artifact": {
   "contractName": "PlasmaChainManager",
   "abi": [
@@ -23949,9 +23949,113 @@
     "name": "solc",
     "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1598194189816": {
+      "events": {
+        "0xaff1f676b0126e9df1eed0d978d10df209b92e0b2997f8f905b63e6f3c07e571": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "signer",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "blockNumber",
+              "type": "uint32"
+            }
+          ],
+          "name": "HeaderSubmittedEvent",
+          "type": "event"
+        },
+        "0x62ecb2a394867776d4797065f4c2c678a4d98de37e96d0a89642599b6e0c4f54": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": true,
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "txIndex",
+              "type": "uint256"
+            }
+          ],
+          "name": "DepositEvent",
+          "type": "event"
+        },
+        "0x3e92e1ba4345fcd7fd5eb5644ea22817cfb1166de32316fee1fb717576a705b6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "withdrawalId",
+              "type": "uint256"
+            }
+          ],
+          "name": "WithdrawalStartedEvent",
+          "type": "event"
+        },
+        "0xe07858b819112fdfd4f28278cd91fb52a97dcac8d08cbd0f4547684313b953c5": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "name": "withdrawalId",
+              "type": "uint256"
+            }
+          ],
+          "name": "WithdrawalChallengedEvent",
+          "type": "event"
+        },
+        "0x50bc78941e8300c93a81c64a89a1701a3210e5797a8772cb6a5e5e3a3f94db39": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "blockNumber",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "exitBlockNumber",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "exitTxIndex",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "name": "exitOIndex",
+              "type": "uint256"
+            }
+          ],
+          "name": "WithdrawalCompleteEvent",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xd54b47F8e6A1b97F3A84f63c867286272b273b7C",
+      "transactionHash": "0x24fa88e96d2d258fda61b2a1da45b44709c56aaec5273064f2360c2b288da458"
+    }
+  },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-23T15:39:36.876Z",
+  "updatedAt": "2020-08-23T15:39:39.211Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

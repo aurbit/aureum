@@ -6,36 +6,37 @@ import { IAeth } from './Aeth'
 import { IBlockchain } from './Blockchain'
 import { ITxManager } from './TxManager'
 
-export interface IServer {
-  txManager: ITxManager
-  blockchain: IBlockchain
-  aeth: IAeth
+export interface IHttpServer {
+  running: boolean
+  http_port: number
 }
 
-export class Server implements IServer {
-  http_port: number
-  aeth: IAeth
-  blockchain: IBlockchain
-  txManager: ITxManager
-  app: any
+export class HttpServer implements IHttpServer {
+  private aeth: IAeth
+  private blockchain: IBlockchain
+  private txManager: ITxManager
+  private app: any
+  public running: boolean
+  public http_port: number
 
   constructor (
     http_port: number,
     aeth: IAeth,
     blockchain: IBlockchain,
-    txManaer: ITxManager
+    txManaer: ITxManager,
+    network: string
   ) {
+    this.running = true
     this.http_port = http_port
     this.aeth = aeth
     this.blockchain = blockchain
     this.txManager = txManaer
     this.app = express()
-    this.logging()
-
-    this.buildRoutes()
+    this.logging(network)
+    return this.buildRoutes()
   }
 
-  buildRoutes (): void {
+  buildRoutes () {
     this.app.use(bodyParser.json())
 
     // Block related
@@ -144,26 +145,26 @@ export class Server implements IServer {
         res.send(JSON.stringify(err))
       }
     })
-
-    this.app.listen(this.http_port, () =>
-      console.log('Aureum Plasma Server on port: ' + this.http_port)
-    )
+    return this.app.listen(this.http_port)
   }
 
-  logging (): void {
-    this.app.use(
-      morgan(function (tokens, req, res) {
-        return [
-          tokens.date('web'),
-          tokens.method(req, res),
-          tokens.url(req, res),
-          tokens.status(req, res),
-          tokens.res(req, res, 'content-length'),
-          '-',
-          tokens['response-time'](req, res),
-          'ms'
-        ].join(' ')
-      })
-    )
+  logging (network): void {
+    const logger = (tokens, req, res) => {
+      return [
+        tokens.date('web'),
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'),
+        '-',
+        tokens['response-time'](req, res),
+        'ms'
+      ].join(' ')
+    }
+
+    if (network !== 'test') {
+      console.log('Aureum HttpServer Started.')
+      this.app.use(morgan(logger))
+    }
   }
 }

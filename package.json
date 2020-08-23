@@ -1,21 +1,23 @@
 {
-  "name": "aureum",
+  "name": "@aurbit/plasma-contracts",
   "version": "1.0.0",
   "description": "Aurbit Ethereum Layer Two Chain",
+  "author": "Chad Lynch",
+  "license": "MIT",
   "scripts": {
-    "chain": "lerna run chain --stream",
+    "bootstrap": "lerna bootstrap",
     "plasma": "cd packages/plasma && npm run plasma",
     "plasma:dev": "cd packages/plasma && npm run plasma:dev",
     "plasma:test": "lerna run plasma:test --stream",
     "migrate": "lerna run migrate --stream",
-    "console": "cd packages/solidity && npx truffle console",
-    "bootstrap": "lerna bootstrap",
-    "link": "lerna link"
+    "chain": "lerna run chain --stream",
+    "console": "cd packages/contracts && npx truffle console"
   },
   "engines": {
     "node": ">=11.8.0"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
-  }
+  },
+  "dependencies": {}
 }

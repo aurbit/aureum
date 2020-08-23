@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const networks = {
+  TEST: 'test',
   DEVELOPMENT: 'development',
   ROPSTEN: 'ropsten'
 }
@@ -22,6 +23,9 @@ const _provider = () => {
   switch (network) {
     case networks.DEVELOPMENT: {
       return 'http://localhost:7545'
+    }
+    case networks.TEST: {
+      return 'http://localhost:9545'
     }
     default:
       return 'http://localhost:7545'
